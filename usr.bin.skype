@@ -1,0 +1,50 @@
+#include <tunables/global>
+
+/usr/bin/skype {
+
+#include <abstractions/base>
+#include <abstractions/dbus-session>
+#include <abstractions/user-tmp>
+#include <abstractions/audio>
+#include <abstractions/nameservice>
+#include <abstractions/ssl_certs>
+#include <abstractions/fonts>
+#include <abstractions/X>
+#include <abstractions/freedesktop.org>
+#include <abstractions/kde>
+
+/usr/bin/skype mr,
+/opt/skype/skype pix,
+/opt/skype/** kmr,
+/usr/share/fonts/** m,
+
+/usr/bin/pulseaudio Pxr,
+/sys/devices/system/cpu/ r,
+/sys/devices/system/cpu/*/cpufreq/scaling_{cur,max}_freq r,
+@{PROC}/*/net/arp r,
+@{PROC}/sys/kernel/ostype r,
+@{PROC}/sys/kernel/osrelease r,
+
+/dev/ r,
+/dev/tty rw,
+/dev/snd/* mrw,
+/{dev,run}/shm/ r,
+/{dev,run}/shm/pulse-shm-* mrw,
+/etc/pulse/client.conf r,
+/dev/pts/* rw,
+/dev/video* mrw,
+
+@{HOME}/.Skype/ rw,
+@{HOME}/.Skype/** krw,
+@{HOME}/.config/Skype/ rw,
+@{HOME}/.config/Skype/** krw,
+/usr/share/skype/** kmr,
+/usr/share/skype/sounds/*.wav kr,
+
+deny @{HOME}/.mozilla/ r,
+deny @{PROC}/[0-9]*/fd/ r,
+deny @{PROC}/[0-9]*/task/ r,
+deny @{PROC}/[0-9]*/task/** r,
+
+}
+
