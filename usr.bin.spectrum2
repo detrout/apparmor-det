@@ -1,0 +1,19 @@
+# Last Modified: Sat Dec 15 19:16:50 2012
+#include <tunables/global>
+
+/usr/bin/spectrum2 {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+
+  /usr/bin/spectrum2_*_backend pxr,
+  /usr/bin/spectrum2 mr,
+  /etc/spectrum2/** r,
+  
+  /var/log/spectrum2/** rw,
+  /{,var/}run/spectrum2/* rw,
+  /var/lib/spectrum2/** rwk,  
+
+  owner /var/tmp/* rw,
+  capability block_suspend,
+  
+}

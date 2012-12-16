@@ -20,3 +20,18 @@ I gave skype access to:
     with scrubbing the evironment
   * Added .config/Skype/** to the directories skype can read/write
 
+Spectrum2
+---------
+
+This is fully my own creation. 
+
+I'm not sure how one should share common features between related profiles.
+
+The three spectrum modules all want access to the log directory and the 
+configuration files for instance. 
+
+There were various features spectrum wanted access to to manage its subprocesses.
+/proc/{pid}/statm r, and nice & sys block block_suspend which I allowed.
+
+It also wanted ptrace which bothered me, so I didn't enable that capability.
+

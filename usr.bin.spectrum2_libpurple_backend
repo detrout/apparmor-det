@@ -1,0 +1,24 @@
+# Last Modified: Sat Dec 15 16:31:06 2012
+#include <tunables/global>
+
+/usr/bin/spectrum2_libpurple_backend {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/ssl_certs>
+
+  /usr/bin/spectrum2_libpurple_backend mr,
+  /usr/lib/libpurple.so* r,
+  /usr/lib/libpurple-client.so r,
+  /usr/lib/purple-2/* rm,
+
+  /etc/spectrum2/** r,
+  /var/log/spectrum2/** rw,
+  /var/lib/spectrum2/** rwk,  
+
+  owner /proc/*/statm r,
+
+  /tmp/ rw,
+  /var/tmp/ rw,
+  
+  capability sys_nice,
+}

@@ -1,0 +1,15 @@
+# Last Modified: Sat Dec 15 10:43:50 2012
+#include <tunables/global>
+
+/usr/bin/spectrum2_manager {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/ssl_certs>
+
+  /usr/bin/spectrum2 pxr,
+  /usr/lib/purple-2/* mr,
+  /etc/spectrum2/** r,
+
+  /{,var/}run/spectrum2/* rw,
+
+}
