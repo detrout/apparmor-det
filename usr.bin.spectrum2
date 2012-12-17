@@ -4,16 +4,13 @@
 /usr/bin/spectrum2 {
   #include <abstractions/base>
   #include <abstractions/nameservice>
+  #include <abstractions/spectrum2>
+  #include <abstractions/user-tmp>
+  
+  /usr/bin/spectrum2 mr,
 
   /usr/bin/spectrum2_*_backend pxr,
-  /usr/bin/spectrum2 mr,
-  /etc/spectrum2/** r,
-  
-  /var/log/spectrum2/** rw,
-  /{,var/}run/spectrum2/* rw,
-  /var/lib/spectrum2/** rwk,  
 
-  owner /var/tmp/* rw,
   capability block_suspend,
   
 }

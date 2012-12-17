@@ -1,0 +1,11 @@
+  # access to config file
+  /etc/spectrum2/** r,
+  
+  #profile
+  /var/lib/spectrum2/** rwk,  
+
+  # pid
+  /{,var/}run/spectrum2/* rw,
+
+  # logging
+  /var/log/spectrum2/** rw,
