@@ -170,6 +170,10 @@
   owner @{HOME}/.cache/mozilla/firefox/**/*.sqlite k,
   owner @{HOME}/.config/gtk-3.0/bookmarks r,
   owner @{HOME}/.config/dconf/user w,
+  # DET kde things is there a kde abstraction?
+  owner @{HOME}/.config/oxygen-gtk/* rw,
+  owner @{HOME}/.kde/share/config/* r,
+  /usr/bin/kde4-config ix,
   owner /{,var/}run/user/*/dconf/user w,
   dbus (send)
        bus=session
