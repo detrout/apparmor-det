@@ -2,16 +2,17 @@
 # Author: Jamie Strandboge <jamie@canonical.com>
 
 # Declare an apparmor variable to help with overrides
-@{MOZ_LIBDIR}=/@MOZ_LIBDIR@
+@{MOZ_LIBDIR}=/usr/lib/iceweasel
+@{MOZ_ADDONDIR}=/usr/lib/mozilla
 
 #include <tunables/global>
 
 # We want to confine the binaries that match:
-#  /@MOZ_LIBDIR@/@MOZ_APP_NAME@
+#  /@MOZ_LIBDIR@/iceweasel
 #  /@MOZ_LIBDIR@/firefox
 # but not:
 #  /@MOZ_LIBDIR@/firefox.sh
-/@MOZ_LIBDIR@/firefox{,*[^s][^h]} {
+/usr/lib/iceweasel/iceweasel {
   #include <abstractions/audio>
   #include <abstractions/cups-client>
   #include <abstractions/dbus-strict>
@@ -78,8 +79,8 @@
   /etc/wildmidi/wildmidi.cfg r,
 
   # firefox specific
-  /etc/firefox*/ r,
-  /etc/firefox*/** r,
+  /etc/iceweasel*/ r,
+  /etc/iceweasel*/** r,
   /etc/xul-ext/** r,
   /etc/xulrunner-2.0*/ r,
   /etc/xulrunner-2.0*/** r,
@@ -101,7 +102,7 @@
   deny /usr/bin/gconftool-2 x,
 
   # These are needed when a new user starts firefox and firefox.sh is used
-  @{MOZ_LIBDIR}/** ixr,
+  #@{MOZ_LIBDIR}/** ixr,
   /usr/bin/basename ixr,
   /usr/bin/dirname ixr,
   /usr/bin/pwd ixr,
@@ -164,9 +165,9 @@
   owner @{HOME}/.{firefox,mozilla}/plugins/** rm,
   owner @{HOME}/.{firefox,mozilla}/**/plugins/** rm,
   owner @{HOME}/.gnome2/firefox* rwk,
-  owner @{HOME}/.cache/mozilla/{,@MOZ_APP_NAME@/} rw,
-  owner @{HOME}/.cache/mozilla/@MOZ_APP_NAME@/** rw,
-  owner @{HOME}/.cache/mozilla/@MOZ_APP_NAME@/**/*.sqlite k,
+  owner @{HOME}/.cache/mozilla/{,firefox/} rw,
+  owner @{HOME}/.cache/mozilla/firefox/** rw,
+  owner @{HOME}/.cache/mozilla/firefox/**/*.sqlite k,
   owner @{HOME}/.config/gtk-3.0/bookmarks r,
   owner @{HOME}/.config/dconf/user w,
   owner /{,var/}run/user/*/dconf/user w,
@@ -220,8 +221,9 @@
   }
 
   # Addons
-  #include <abstractions/ubuntu-browsers.d/firefox>
+  # #include <abstractions/ubuntu-browsers.d/firefox>
 
   # Site-specific additions and overrides. See local/README for details.
-  #include <local/usr.bin.firefox>
+  # #include <local/usr.bin.iceweasel>
 }
+
