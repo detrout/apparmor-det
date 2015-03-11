@@ -119,7 +119,7 @@
   @{PROC}/sys/vm/overcommit_memory r,
   /sys/devices/pci[0-9]*/**/uevent r,
   /sys/devices/platform/**/uevent r,
-  /sys/devices/pci*/**/{busnum,idVendor,idProduct} r,
+  /sys/devices/pci*/**/{busnum,idVendor,idProduct,devnum} r,
   owner @{HOME}/.cache/thumbnails/** rw,
 
   /etc/mtab r,
