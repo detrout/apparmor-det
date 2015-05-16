@@ -25,6 +25,7 @@
   #include <abstractions/p11-kit>
   #include <abstractions/ubuntu-unity7-base>
   #include <abstractions/ubuntu-unity7-launcher>
+  #include <abstractions/video>
 
   #include <abstractions/dbus-accessibility-strict>
   dbus (send)
@@ -139,6 +140,7 @@
 
   # Needed for container to work in xul builds
   /usr/lib/xulrunner-*/plugin-container ixr,
+  /usr/lib/iceweasel/plugin-container ixr,
 
   # allow access to documentation and other files the user may want to look
   # at in /usr and /opt
