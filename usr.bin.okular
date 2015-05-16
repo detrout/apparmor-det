@@ -1,0 +1,24 @@
+# Author:
+
+#include <tunables/global>
+
+/usr/bin/okular {
+  #include <abstractions/base>
+  #include <abstractions/dbus-strict>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/kde>
+  #include <abstractions/nameservice>
+
+  /usr/bin/okular r,
+  /usr/share/kde4/apps/okular/* r,
+  /usr/lib/kde4/okularpart.so rm,
+  /usr/lib/kde4/okularGenerator_*.so m,
+  /usr/lib/@{multiarch}/kde4/plugins/kscreen/1/KSC_*.so m,
+  owner @{HOME}/** rwkl,
+  #owner @{HOME}/.kde{,4}/share/config/** rwkl,
+  #owner @{HOME}/.kde{,4}/share/config/okularrc rw,
+  #owner @{HOME}/.kde{,4}/share/config/okularpartrc rw,
+  #owner @{HOME}/.kde{,4}/share/config/servicetype_profilerc rw,
+  #owner @{HOME}/.kde{,4}/share/apps/okular/** rw,
+
+}
