@@ -171,9 +171,11 @@
   owner @{HOME}/.{firefox,mozilla}/plugins/** rm,
   owner @{HOME}/.{firefox,mozilla}/**/plugins/** rm,
   owner @{HOME}/.gnome2/firefox* rwk,
+  owner @{HOME}/.cache/gstreamer-1.0/** rw,
   owner @{HOME}/.cache/mozilla/{,firefox/} rw,
   owner @{HOME}/.cache/mozilla/firefox/** rw,
   owner @{HOME}/.cache/mozilla/firefox/**/*.sqlite k,
+  owner @{HOME}/.config/gtkrc-2.0 r,
   owner @{HOME}/.config/gtk-3.0/bookmarks r,
   owner @{HOME}/.config/dconf/user w,
   # DET kde things is there a kde abstraction?
