@@ -148,6 +148,8 @@
   # at in /usr and /opt
   /usr/ r,
   /usr/** r,
+  /@{MOZ_ADDONDIR}/* mr,
+  /usr/lib/@{multiarch}/libvisual*/*.so mr,
   /opt/ r,
   /opt/** r,
 
