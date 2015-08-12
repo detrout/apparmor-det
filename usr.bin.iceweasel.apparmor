@@ -27,6 +27,10 @@
   #include <abstractions/ubuntu-unity7-launcher>
   #include <abstractions/video>
 
+  audit deny @{HOME}/.gnupg/** mrwkl,
+  audit deny @{HOME}/.ssh/** mrwkl,
+  audit deny /etc/shadow mrwkl,
+
   #include <abstractions/dbus-accessibility-strict>
   dbus (send)
        bus=session
