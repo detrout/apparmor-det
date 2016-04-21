@@ -2,17 +2,17 @@
 # Author: Jamie Strandboge <jamie@canonical.com>
 
 # Declare an apparmor variable to help with overrides
-@{MOZ_LIBDIR}=/usr/lib/iceweasel
+@{MOZ_LIBDIR}=/usr/lib/firefox
 @{MOZ_ADDONDIR}=/usr/lib/mozilla
 
 #include <tunables/global>
 
 # We want to confine the binaries that match:
-#  /@MOZ_LIBDIR@/iceweasel
+#  /@MOZ_LIBDIR@/firefox
 #  /@MOZ_LIBDIR@/firefox
 # but not:
 #  /@MOZ_LIBDIR@/firefox.sh
-/usr/lib/iceweasel/iceweasel {
+/usr/lib/firefox/iceweasel {
   #include <abstractions/audio>
   #include <abstractions/cups-client>
   #include <abstractions/dbus-strict>
@@ -85,8 +85,8 @@
   /etc/wildmidi/wildmidi.cfg r,
 
   # firefox specific
-  /etc/iceweasel*/ r,
-  /etc/iceweasel*/** r,
+  /etc/firefox*/ r,
+  /etc/firefox*/** r,
   /etc/xul-ext/** r,
   /etc/xulrunner-2.0*/ r,
   /etc/xulrunner-2.0*/** r,
@@ -146,7 +146,7 @@
 
   # Needed for container to work in xul builds
   /usr/lib/xulrunner-*/plugin-container ixr,
-  /usr/lib/iceweasel/plugin-container ixr,
+  /usr/lib/firefox/plugin-container ixr,
 
   # allow access to documentation and other files the user may want to look
   # at in /usr and /opt
@@ -244,6 +244,6 @@
   # #include <abstractions/ubuntu-browsers.d/firefox>
 
   # Site-specific additions and overrides. See local/README for details.
-  # #include <local/usr.bin.iceweasel>
+  # #include <local/usr.bin.firefox>
 }
 
