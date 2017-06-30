@@ -241,6 +241,10 @@
     deny /tmp/gtalkplugin.log w,
   }
 
+  /var/lib/flatpak/exports/share/applications/mimeinfo.cache r,
+  /var/lib/flatpak/exports/share/icons/** r,
+  /var/lib/flatpak/exports/share/mime/** r,
+
   /sys/devices/pci[0-9]*/**/{busnum,config,devnum,descriptors,speed,uevent} r,
   /dev/video[0-9] rw,
   /dev/shm/org.chromium*  rw,
