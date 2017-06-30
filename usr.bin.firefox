@@ -116,6 +116,7 @@
   /bin/which ixr,
   /usr/bin/tr ixr,
   @{PROC}/ r,
+  @{PROC}/[0-9]*/net/arp r,
   @{PROC}/[0-9]*/cmdline r,
   @{PROC}/[0-9]*/mountinfo r,
   @{PROC}/[0-9]*/stat r,
