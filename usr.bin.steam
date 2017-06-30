@@ -17,6 +17,10 @@
 	#include <abstractions/gnome>
 	#include <abstractions/user-download>
 
+	audit deny @{HOME}/.gnupg/** mrwkl,
+  	audit deny @{HOME}/.ssh/** mrwkl,
+  	audit deny /etc/shadow mrwkl,
+
 	# Should always have dedicated uid and home
 	#owner @{HOME}/.steam rwkl,
 	owner @{HOME}/.steam/** rwkmixl,
