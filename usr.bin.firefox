@@ -18,6 +18,7 @@
   #include <abstractions/dbus-strict>
   #include <abstractions/dbus-session-strict>
   #include <abstractions/dconf>
+  #include <abstractions/fonts>
   #include <abstractions/gnome>
   #include <abstractions/ibus>
   #include <abstractions/nameservice>
@@ -101,7 +102,6 @@
   deny /.suspended r,
   deny /boot/initrd.img* r,
   deny /boot/vmlinuz* r,
-  deny /var/cache/fontconfig/ w,
   deny @{HOME}/.local/share/recently-used.xbel r,
 
   # TODO: investigate
