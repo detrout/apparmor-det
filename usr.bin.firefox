@@ -12,7 +12,7 @@
 #  /@MOZ_LIBDIR@/firefox
 # but not:
 #  /@MOZ_LIBDIR@/firefox.sh
-/usr/lib/firefox/iceweasel {
+/usr/lib/firefox-esr/firefox-esr {
   #include <abstractions/audio>
   #include <abstractions/cups-client>
   #include <abstractions/dbus-strict>
