@@ -1,0 +1,83 @@
+#include <tunables/global>
+
+/opt/zoom/ZoomLauncher {
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/dbus-strict>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/fonts>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  #include <abstractions/private-files-strict>
+  #include <abstractions/user-tmp>
+  #include <abstractions/video>
+  #include <abstractions/X>
+
+  #include <abstractions/dbus-accessibility-strict>
+  dbus (send)
+       bus=session
+       peer=(name=org.a11y.Bus),
+  dbus (receive)
+       bus=session
+       interface=org.a11y.atspi**,
+  dbus (receive, send)
+       bus=accessibility,
+
+  # for networking
+  network inet stream,
+  network inet6 stream,
+  @{PROC}/[0-9]*/net/if_inet6 r,
+  @{PROC}/[0-9]*/net/ipv6_route r,
+  @{PROC}/[0-9]*/net/dev r,
+  @{PROC}/[0-9]*/net/wireless r,
+  dbus (send)
+       bus=system
+       path=/org/freedesktop/NetworkManager
+       member=state,
+  dbus (receive)
+       bus=system
+       path=/org/freedesktop/NetworkManager,
+
+  /bin/dash ix,
+  /bin/cat ix,
+  /bin/readlink ix,
+  /sbin/killall5 ix,
+  /usr/bin/lscpu ix,
+  /usr/share/fonts/truetype/** rm,
+  /opt/ r,
+  /opt/zoom/ r,
+  /opt/zoom/** r,
+  /opt/zoom/RegisterProtocol/ rw,
+  /opt/zoom/QtQuick/ r,
+  /opt/zoom/QtQuick/** rm,
+  /opt/zoom/QtQuick.2/** rm,
+  /opt/zoom/iconengines/lib* rm,
+  /opt/zoom/imageformats/lib* rm,
+  /opt/zoom/platforms/lib* rm,
+  /opt/zoom/platforminputcontexts/lib* rm,
+  /opt/zoom/platformthemes/lib*.so* rm,
+  /opt/zoom/lib*.so.* rm,
+  /opt/zoom/xcbglintegrations/*.so rm,
+  /opt/zoom/zoom ix,
+
+  @{PROC} r,
+  owner @{PROC}/[0-9]*/fd/ r,
+  owner @{PROC}/[0-9]*/mounts r,
+  owner @{PROC}/[0-9]*/stat r,
+  @{PROC}/sys/kernel/pid_max r,
+
+  /sys/devices/pci[0-9]*/**/{busnum,config,devnum,descriptors,speed,uevent} r,
+  /sys/devices/system/cpu/kernel_max r,
+  
+  deny @{HOME}/.Private mrwkl,
+  
+  owner /dev/tty rw,
+  owner @{HOME}/.zoom/ rwk,
+  owner @{HOME}/.zoom/** rwk,
+  owner @{HOME}/.cache/qt_compose_cache_little_endian* rw,
+  owner @{HOME}/.config/zoomus.conf* rw,
+
+  /dev/dri/ r,
+  /dev/video[0-9] rwm,
+}
