@@ -240,6 +240,9 @@
     deny /tmp/gtalkplugin.log w,
   }
 
+  /sys/devices/pci[0-9]*/**/{busnum,config,devnum,descriptors,speed,uevent} r,
+  /dev/video[0-9] rw,
+  /dev/shm/org.chromium*  rw,
   # Addons
   # #include <abstractions/ubuntu-browsers.d/firefox>
 
