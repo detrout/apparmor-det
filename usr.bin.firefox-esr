@@ -1,5 +1,5 @@
 # vim:syntax=apparmor
 
-/usr/lib/firefox-esr/firefox {
+/usr/lib/firefox-esr/firefox-esr {
     #include <abstractions/firefox>
 }
