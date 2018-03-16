@@ -64,10 +64,10 @@
   @{PROC} r,
   owner @{PROC}/[0-9]*/fd/ r,
   owner @{PROC}/[0-9]*/mounts r,
-  owner @{PROC}/[0-9]*/stat r,
+  @{PROC}/[0-9]*/stat r,
   @{PROC}/sys/kernel/pid_max r,
 
-  /sys/devices/pci[0-9]*/**/{busnum,config,devnum,descriptors,speed,uevent} r,
+  /sys/devices/pci[0-9]*/**/{busnum,config,device,devnum,descriptors,revision,speed,subsystem_device,subsystem_vendor,uevent,vendor} r,
   /sys/devices/system/cpu/kernel_max r,
   
   deny @{HOME}/.Private mrwkl,
