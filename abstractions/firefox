@@ -246,3 +246,6 @@ owner @{HOME}/public_html/** r,
 /usr/bin/evolution Uxr,
 /usr/bin/libreoffice Uxr,
 /usr/bin/evince Uxr,
+
+owner @{HOME}/.zotero/ rw,
+owner @{HOME}/.zotero/** rwk,
