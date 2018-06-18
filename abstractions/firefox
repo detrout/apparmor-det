@@ -1,17 +1,3 @@
-# Author: Jamie Strandboge <jamie@canonical.com>
-
-# Declare an apparmor variable to help with overrides
-@{MOZ_LIBDIR}=/usr/lib/firefox
-@{MOZ_ADDONDIR}=/usr/lib/mozilla
-
-#include <tunables/global>
-
-# We want to confine the binaries that match:
-#  /@MOZ_LIBDIR@/firefox
-#  /@MOZ_LIBDIR@/firefox
-# but not:
-#  /@MOZ_LIBDIR@/firefox.sh
-
 #include <abstractions/audio>
 #include <abstractions/cups-client>
 #include <abstractions/dbus-strict>
