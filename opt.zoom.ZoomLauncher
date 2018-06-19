@@ -113,7 +113,8 @@
   owner @{HOME}/.config/zoomus.conf* rwk,
   owner @{HOME}/.local/share/mime/mime.cache m,
   owner @{HOME}/.local/share/zoom/ rwk,
-  owner @{HOME}/.local/share/zoom/** rwk,
+  owner @{HOME}/.local/share/zoom/* rwk,
+  owner @{HOME}/.config/.J* rwk,
   owner @{HOME}/.config/gtk-3.0/settings.ini r,
   owner "@{HOME}/.config/Unknown Organization/" rw,
   owner "@{HOME}/.config/Unknown Organization/**" rwk,
@@ -121,6 +122,7 @@
   owner @{HOME}/.config/.T* rwk,
   owner @{HOME}/.config/dconf/user rw,
   owner /{,var/}run/user/*/dconf/user rw,
+  owner /dev/shm/.org.chromium.Chromium* rwm,
 
   /var/lib/flatpak/exports/share/mime/mime.cache m,
   /usr/share/mime/mime.cache m,
