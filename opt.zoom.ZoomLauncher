@@ -46,6 +46,8 @@
   /sbin/killall5 ix,
   /usr/bin/lscpu ix,
   /usr/bin/lspci ix,
+  /opt/zoom/zopen ix,
+  /usr/bin/xdg-open Uxr,
 
   /usr/share/fonts/truetype/** rm,
   /usr/share/fontconfig/conf.avail/ r,
