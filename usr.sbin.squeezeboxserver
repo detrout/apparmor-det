@@ -1,0 +1,88 @@
+#include <tunables/global>
+
+/usr/sbin/squeezeboxserver {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/perl>
+
+  /bin/bash ix,
+  /bin/dash ixr,
+  /bin/head ix,
+  
+  /usr/bin/killall cx -> killall,
+  profile killall {
+    #include <abstractions/base>
+    capability sys_ptrace,
+    
+    /usr/bin/killall ixmr,
+    @{PROC}/ r,
+    @{PROC}/*/stat r,
+    @{PROC}/*/cmdline r,
+  }
+  
+  /sbin/ifconfig cx -> ifconfig,
+  profile ifconfig {
+    #include <abstractions/base>
+
+    /sbin/ifconfig ixmr,
+    @{PROC}/@{pid}/net/dev r,
+    @{PROC}/@{pid}/net/if_inet6 r,
+  }
+
+  /usr/sbin/squeezeboxserver ixr,
+  /usr/sbin/squeezeboxserver_safe ixr,
+  /usr/sbin/squeezeboxserver-cleanup ixr,
+  /usr/sbin/squeezeboxserver-scanner ixr,
+
+  /usr/share/squeezeboxserver/Bin/x86_64-linux/faad ixr,
+  /usr/share/squeezeboxserver/Bin/x86_64-linux/flac ixr,
+  /usr/share/squeezeboxserver/Bin/x86_64-linux/mac ixr,
+  /usr/share/squeezeboxserver/Bin/x86_64-linux/sox ixr,
+  /usr/share/squeezeboxserver/Bin/x86_64-linux/wvunpack ixr,  
+  
+  /etc/squeezeboxserver/ r,
+  /etc/squeezeboxserver/** r,
+  /usr/share/squeezeboxserver/** rm,
+
+  owner /var/lib/squeezeboxserver/cache/* rwk,
+  owner /var/lib/squeezeboxserver/ rw,
+  owner /var/lib/squeezeboxserver/** rw,
+  owner /var/log/squeezeboxserver/ rw,
+  owner /var/log/squeezeboxserver/* rw,
+
+  owner /{,var/}run/logitechmediaserver.pid rw,
+
+  # Airplay bridge
+  /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/Bin/squeeze2raop-x86-64 cx -> airplay,
+
+  profile airplay {
+    #include <abstractions/base>
+    #include <abstractions/nameservice>
+
+    /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/Bin/squeeze2raop-x86-64 ixmr,
+    /var/lib/squeezeboxserver/prefs/raopbridge.xml rw,
+    /var/log/squeezeboxserver/raopbridge.log rw,
+
+    /sys/devices/system/cpu/ r,   
+  }
+
+  # Spotify Bridge
+  /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/Spotty/Bin/i386-linux/spotty-x86_64 cx -> spotify,
+  /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/Spotty/Bin/i386-linux/spotty cx -> spotify,
+
+  profile spotify {
+    #include <abstractions/base>
+    #include <abstractions/nameservice>
+
+    /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/Spotty/Bin/i386-linux/spotty-x86_64 ixmr,
+    /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/Spotty/Bin/i386-linux/spotty ixmr,
+    /var/lib/squeezeboxserver/cache/spotty/ rw,
+    /var/lib/squeezeboxserver/cache/spotty/** rw,
+
+    @{PROC}/sys/vm/overcommit_memory r,
+    /sys/kernel/mm/transparent_hugepage/enabled r,
+  }
+
+  # music directories
+  /home/*/Music/** r,
+}
