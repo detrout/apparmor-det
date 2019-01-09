@@ -109,9 +109,8 @@ owner @{PROC}/[0-9]*/task/[0-9]*/stat r,
 @{PROC}/[0-9]*/status r,
 @{PROC}/filesystems r,
 @{PROC}/sys/vm/overcommit_memory r,
-/sys/devices/pci[0-9]*/**/uevent r,
 /sys/devices/platform/**/uevent r,
-/sys/devices/pci*/**/{busnum,device,idVendor,idProduct,devnum,vendor} r,
+/sys/devices/pci[0-9]*/**/{busnum,config,device,devnum,descriptors,idVendor,idProduct,speed,subsystem_device,subsystem_vendor,uevent} r,
 owner @{HOME}/.cache/thumbnails/** rw,
 
 /etc/mtab r,
@@ -230,7 +229,6 @@ profile lsb_release {
 /var/lib/flatpak/exports/share/icons/** r,
 /var/lib/flatpak/exports/share/mime/** r,
 
-/sys/devices/pci[0-9]*/**/{busnum,config,devnum,descriptors,speed,uevent} r,
 /dev/video[0-9] rw,
 /dev/shm/org.chromium*  rw,
 # Addons
