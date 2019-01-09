@@ -222,6 +222,8 @@ profile lsb_release {
   /usr/bin/ r,
   /usr/bin/python3.[0-4] r,
 
+  owner /tmp/** rwm,
+
   # file_inherit
   deny /tmp/gtalkplugin.log w,
 }
