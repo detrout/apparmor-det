@@ -111,7 +111,7 @@ owner @{PROC}/[0-9]*/task/[0-9]*/stat r,
 @{PROC}/sys/vm/overcommit_memory r,
 /sys/devices/pci[0-9]*/**/uevent r,
 /sys/devices/platform/**/uevent r,
-/sys/devices/pci*/**/{busnum,idVendor,idProduct,devnum,vendor} r,
+/sys/devices/pci*/**/{busnum,device,idVendor,idProduct,devnum,vendor} r,
 owner @{HOME}/.cache/thumbnails/** rw,
 
 /etc/mtab r,
