@@ -211,16 +211,26 @@ profile lsb_release {
   #include <abstractions/base>
   #include <abstractions/python>
   /usr/bin/lsb_release r,
-  /bin/dash ixr,
-  /usr/bin/dpkg-query ixr,
-  /etc/lsb-release r,
+  /usr/share/distro-info/debian.csv r,
+  /etc/dpkg/origins/* r,
   /etc/debian_version r,
-  /var/lib/dpkg/** r,
-
   /usr/local/lib/python3.[0-4]/dist-packages/ r,
   /usr/bin/ r,
   /usr/bin/python3.[0-8] ixr,
 
+  /usr/bin/apt-cache ix,
+  /etc/apt/** r,
+  /var/cache/apt/** r,
+  /var/lib/apt/lists/ r,
+  /var/lib/apt/lists/** r,
+  /usr/share/dpkg/ r,
+  /usr/share/dpkg/** r,
+  owner @{PROC}/[0-9]*/fd/ r,
+  owner @{PROC}/[0-9]*/fd/** r,
+
+  /usr/bin/dpkg ix,
+  /var/lib/dpkg/** r,
+  /etc/dpkg/** r,
 
   owner /tmp/** rwm,
 
