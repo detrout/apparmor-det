@@ -134,4 +134,45 @@
   /usr/share/themes/Default/gtk-3.0/gtk-keys.css r,
 
   /etc/passwd m,
+
+  /etc/os-release r,
+  /etc/debian-version r,
+  # Miscellaneous (to be abstracted)
+  # Ideally these would use a child profile. They are all ELF executables
+  # so running with 'Ux', while not ideal, is ok because we will at least
+  # benefit from glibc's secure execute.
+  /usr/bin/mkfifo Uxr,  # investigate
+  /bin/ps Uxr,
+  /bin/uname Uxr,
+  /usr/bin/lsb_release Cxr -> lsb_release,
+  profile lsb_release {
+    #include <abstractions/base>
+    #include <abstractions/python>
+    /usr/bin/lsb_release r,
+    /usr/share/distro-info/debian.csv r,
+    /etc/dpkg/origins/* r,
+    /etc/debian_version r,
+    /usr/local/lib/python3.[0-4]/dist-packages/ r,
+    /usr/bin/ r,
+    /usr/bin/python3.[0-8] ixr,
+
+    /usr/bin/apt-cache ix,
+    /etc/apt/** r,
+    /var/cache/apt/** r,
+    /var/lib/apt/lists/ r,
+    /var/lib/apt/lists/** r,
+    /usr/share/dpkg/ r,
+    /usr/share/dpkg/** r,
+    owner @{PROC}/[0-9]*/fd/ r,
+    owner @{PROC}/[0-9]*/fd/** r,
+
+    /usr/bin/dpkg ix,
+    /var/lib/dpkg/** r,
+    /etc/dpkg/** r,
+
+    owner /tmp/** rwm,
+
+    # file_inherit
+    deny /tmp/gtalkplugin.log w,
+  }
 }
