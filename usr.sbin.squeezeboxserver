@@ -44,6 +44,7 @@
   /etc/squeezeboxserver/** r,
   /etc/ssl/openssl.cnf r,
   /usr/share/squeezeboxserver/** rm,
+  owner /tmp/** rw,
 
   owner /var/lib/squeezeboxserver/cache/* rwk,
   owner /var/lib/squeezeboxserver/ rw,
