@@ -1,0 +1,5 @@
+apparmor-det (0.1.0) unstable; urgency=medium
+
+  * Initial packaging.
+
+ -- Diane Trout <diane@ghic.org>  Wed, 09 Jan 2019 10:25:18 -0700

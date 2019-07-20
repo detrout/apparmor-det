@@ -1,0 +1,5 @@
+abstractions/* /etc/apparmor.d/abstractions/
+local/* /etc/apparmor.d/local/
+opt.* /etc/apparmor.d/
+usr.* /etc/apparmor.d/
+README.rst /usr/share/doc/apparmor-det/

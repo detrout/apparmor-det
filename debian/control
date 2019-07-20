@@ -1,0 +1,18 @@
+Source: apparmor-det
+Maintainer: Diane Trout <diane@ghic.org>
+Section: admin
+Priority: optional
+Build-Depends: debhelper (>= 11)
+Standards-Version: 4.2.1
+Vcs-Browser: https://github.com/detrout/apparmor-det
+Vcs-Git: https://github.com/detrout/apparmor-det.git
+Homepage: https://github.com/detrout/apparmor-det
+
+Package: apparmor-det
+Architecture: any
+Depends: ${misc:Depends}
+Recommends: ${misc:Recommends}
+Description: Additional apparmor rules
+ This contains additional apparmor rules for things that aren't
+ provided by Debian Either because the package is too complex like firefox, or
+ because it is proprietary software.

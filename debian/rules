@@ -1,0 +1,6 @@
+#!/usr/bin/make -f
+
+VERSION := $(shell dpkg-parsechangelog | grep ^Version: | cut -d' ' -f2)
+
+%:
+	dh $*
