@@ -14,7 +14,7 @@
 # but not:
 #  /@MOZ_LIBDIR@/firefox.sh
 
-/usr/lib/firefox-esr/firefox {
+/usr/lib/firefox/firefox {
     #include <abstractions/firefox>
     #include <local/usr.bin.firefox>
 }
