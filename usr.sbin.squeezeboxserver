@@ -54,6 +54,7 @@
   owner /{,var/}run/logitechmediaserver.pid rw,
 
   # Airplay bridge
+  /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/lib/5.28/x86_64-linux-thread-multi/auto/CryptX/CryptX.so m,
   /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/Bin/squeeze2raop-x86-64 cx -> airplay,
 
   profile airplay {
