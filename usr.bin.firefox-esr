@@ -3,7 +3,7 @@
 # Author: Jamie Strandboge <jamie@canonical.com>
 
 # Declare an apparmor variable to help with overrides
-@{MOZ_LIBDIR}=/usr/lib/firefox
+@{MOZ_LIBDIR}=/usr/lib/firefox-esr
 @{MOZ_ADDONDIR}=/usr/lib/mozilla
 
 #include <tunables/global>
@@ -15,5 +15,7 @@
 #  /@MOZ_LIBDIR@/firefox.sh
 
 /usr/lib/firefox-esr/firefox-esr {
-#include <abstractions/firefox>
+    /usr/lib/firefox-esr/firefox-esr ixr,
+    #include <abstractions/firefox>
+    #include <local/usr.bin.firefox>
 }
