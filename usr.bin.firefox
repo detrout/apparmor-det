@@ -16,4 +16,5 @@
 
 /usr/lib/firefox-esr/firefox {
     #include <abstractions/firefox>
+    #include <local/usr.bin.firefox>
 }
