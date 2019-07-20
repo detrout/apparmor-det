@@ -42,6 +42,7 @@
   
   /etc/squeezeboxserver/ r,
   /etc/squeezeboxserver/** r,
+  /etc/ssl/openssl.cnf r,
   /usr/share/squeezeboxserver/** rm,
 
   owner /var/lib/squeezeboxserver/cache/* rwk,
@@ -62,6 +63,8 @@
     /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/Bin/squeeze2raop-x86-64 ixmr,
     /var/lib/squeezeboxserver/prefs/raopbridge.xml rw,
     /var/log/squeezeboxserver/raopbridge.log rw,
+
+    /etc/ssl/openssl.cnf r,
 
     /sys/devices/system/cpu/ r,   
   }
