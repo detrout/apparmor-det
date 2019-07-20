@@ -132,4 +132,6 @@
   /usr/bin/gsettings Ux,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
   /usr/share/themes/Default/gtk-3.0/gtk-keys.css r,
+
+  /etc/passwd m,
 }
