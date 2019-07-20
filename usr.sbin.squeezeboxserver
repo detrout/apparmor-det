@@ -53,6 +53,8 @@
 
   owner /{,var/}run/logitechmediaserver.pid rw,
 
+  signal (send) peer=/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/Bin/squeeze2raop-x86-64,
+
   # Airplay bridge
   /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/lib/5.28/x86_64-linux-thread-multi/auto/CryptX/CryptX.so m,
   /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/RaopBridge/Bin/squeeze2raop-x86-64 cx -> airplay,
@@ -68,7 +70,11 @@
     /etc/ssl/openssl.cnf r,
 
     /sys/devices/system/cpu/ r,   
+    signal (receive) peer=@{profile_name}/airplay,
   }
+
+  signal (send) peer=/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/Spotty/Bin/i386-linux/spotty-x86_64,
+  signal (send) peer=/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/Spotty/Bin/i386-linux/spotty,
 
   # Spotify Bridge
   /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/Spotty/Bin/i386-linux/spotty-x86_64 cx -> spotify,
@@ -85,6 +91,7 @@
 
     @{PROC}/sys/vm/overcommit_memory r,
     /sys/kernel/mm/transparent_hugepage/enabled r,
+    signal (receive) peer=@{profile_name}/spotify,
   }
 
   # music directories
