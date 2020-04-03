@@ -78,9 +78,9 @@
   /opt/zoom/zoom ix,
 
   @{PROC} r,
-  owner @{PROC}/[0-9]*/fd/ r,
-  owner @{PROC}/[0-9]*/mounts r,
-  @{PROC}/[0-9]*/stat r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mounts r,
+  @{PROC}/@{pid}/stat r,
   @{PROC}/bus/pci/devices r,
   @{PROC}/sys/kernel/pid_max r,
   @{PROC}/sys/kernel/osrelease r,
