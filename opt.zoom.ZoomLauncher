@@ -81,6 +81,8 @@
   owner @{PROC}/@{pid}/fd/ r,
   owner @{PROC}/@{pid}/mounts r,
   @{PROC}/@{pid}/stat r,
+  @{PROC}/@{pid}/task/* r,
+  @{PROC}/@{pid}/oom_score_adj w,
   @{PROC}/bus/pci/devices r,
   @{PROC}/sys/kernel/pid_max r,
   @{PROC}/sys/kernel/osrelease r,
