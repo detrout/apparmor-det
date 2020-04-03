@@ -125,6 +125,7 @@
   owner @{HOME}/.local/share/mime/mime.cache m,
   owner @{HOME}/.local/share/zoom/ rwk,
   owner @{HOME}/.local/share/zoom/** rwk,
+  owner @{HOME}/.cache/zoom/QtWebEngine/Default/Cache/* rm,
   owner @{HOME}/.config/.J* rwk,
   owner @{HOME}/.config/gtk-3.0/settings.ini r,
   owner "@{HOME}/.config/Unknown Organization/" rw,
