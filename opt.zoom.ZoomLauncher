@@ -123,6 +123,7 @@
   owner @{HOME}/.cache/zoom/qmlcache/ rwmk,
   owner @{HOME}/.cache/zoom/qmlcache/** rwmk,
   owner @{HOME}/.config/zoomus.conf* rwk,
+  owner @{HOME}/.config/.@{pid} rwk,
   owner @{HOME}/.local/share/mime/mime.cache m,
   owner @{HOME}/.local/share/zoom/ rwk,
   owner @{HOME}/.local/share/zoom/** rwk,
