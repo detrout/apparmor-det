@@ -135,6 +135,8 @@
   owner @{HOME}/.config/.T* rwk,
   owner @{HOME}/.config/dconf/user rw,
   owner /{,var/}run/user/*/dconf/user rw,
+  owner @{HOME}/.pki/nssdb/cert9.db r,
+  owner @{HOME}/.pki/nssdb/pkcs11.txt r,
   owner /dev/shm/.org.chromium.Chromium* rwm,
 
   /var/lib/flatpak/exports/share/mime/mime.cache m,
