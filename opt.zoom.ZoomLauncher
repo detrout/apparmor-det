@@ -90,6 +90,7 @@
   /sys/devices/pci[0-9]*/**/{busnum,class,config,device,devnum,descriptors,irq,resource,revision,speed,subsystem_device,subsystem_vendor,uevent,vendor} r,
   /sys/bus/pci/devices/ r,
   /usr/share/misc/pci.ids r,
+  /usr/share/icons/hicolor/** rm,
 
   /sys/devices/system/cpu/cpufreq/policy*/{cpuinfo_max_freq,cpuinfo_min_freq} r,
   /sys/devices/system/cpu/kernel_max r,
