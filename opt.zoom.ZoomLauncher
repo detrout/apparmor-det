@@ -47,6 +47,7 @@
 
   /bin/dash ix,
   /bin/cat ix,
+  /bin/grep ix,
   /bin/readlink ix,
   /sbin/killall5 ix,
   /usr/bin/lscpu ix,
