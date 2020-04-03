@@ -72,6 +72,7 @@
   /opt/zoom/platformthemes/lib*.so* rm,
   /opt/zoom/lib*.so.* rm,
   /opt/zoom/xcbglintegrations/*.so rm,
+  ptrace (read) peer=/opt/zoom/QtWebEngineProcess,
 
   /opt/zoom/QtWebEngineProcess ix,
   /opt/zoom/qtdiag ix,
