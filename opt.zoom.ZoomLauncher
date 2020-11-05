@@ -148,10 +148,11 @@
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
   /usr/share/themes/Default/gtk-3.0/gtk-keys.css r,
 
-  /etc/passwd m,
-
-  /etc/os-release r,
   /etc/debian-version r,
+  /etc/os-release r,
+  /etc/passwd m,
+  /etc/timezone r,
+
   # Miscellaneous (to be abstracted)
   # Ideally these would use a child profile. They are all ELF executables
   # so running with 'Ux', while not ideal, is ok because we will at least
