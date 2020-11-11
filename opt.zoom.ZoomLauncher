@@ -45,11 +45,11 @@
   /usr/bin/pactl ix,
   /usr/bin/pacmd ix,
 
-  /bin/dash ix,
-  /bin/cat ix,
-  /bin/grep ix,
-  /bin/readlink ix,
-  /sbin/killall5 ix,
+  /{,usr/}bin/cat ix,
+  /{,usr/}bin/dash ix,
+  /{,usr/}bin/grep ix,
+  /{,usr/}bin/readlink ix,
+  /{,usr/}sbin/killall5 ix,
   /usr/bin/lscpu ix,
   /usr/bin/lspci ix,
   /opt/zoom/zopen ix,
@@ -158,8 +158,8 @@
   # so running with 'Ux', while not ideal, is ok because we will at least
   # benefit from glibc's secure execute.
   /usr/bin/mkfifo Uxr,  # investigate
-  /bin/ps Uxr,
-  /bin/uname Uxr,
+  /{,usr/}bin/ps Uxr,
+  /{,usr/}bin/uname Uxr,
   /usr/bin/lsb_release Cxr -> lsb_release,
   profile lsb_release {
     #include <abstractions/base>
