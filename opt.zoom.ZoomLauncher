@@ -42,11 +42,14 @@
 
   # pulse audo configuration
   signal (send) peer=/usr/bin/pacmd set=(usr2),
+  #ptrace (read) peer=unconfined,
   /usr/bin/pactl ix,
   /usr/bin/pacmd ix,
 
   /{,usr/}bin/cat ix,
   /{,usr/}bin/dash ix,
+  #/{,usr/}bin/bash ix,
+  #/usr/bin/gawk ix,
   /{,usr/}bin/grep ix,
   /{,usr/}bin/readlink ix,
   /{,usr/}sbin/killall5 ix,
