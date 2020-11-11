@@ -112,6 +112,8 @@
   owner @{HOME}/.zoom/** rwk,
   owner @{HOME}/.zoom/data/ rwk,
   owner @{HOME}/.zoom/data/** rwmk,
+  owner @{HOME}/.config/QtProject.conf r,
+  owner @{HOME}/.config/gtk-3.0/{gtk.css,colors.css} r,
   owner @{HOME}/.cache/qt_compose_cache_little_endian* rw,
   owner @{HOME}/.cache/qtshadercache/ rw,
   owner @{HOME}/.cache/qtshadercache/** rmw,
