@@ -1,208 +1,175 @@
+# Last Modified: Wed Dec 23 11:50:26 2020
 #include <tunables/global>
 
 /opt/zoom/ZoomLauncher {
+  #include <abstractions/X>
   #include <abstractions/audio>
   #include <abstractions/base>
-  #include <abstractions/dbus-strict>
+  #include <abstractions/dbus-accessibility-strict>
   #include <abstractions/dbus-session-strict>
-  #include <abstractions/freedesktop.org>
+  #include <abstractions/dbus-strict>
   #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
   #include <abstractions/nameservice>
   #include <abstractions/openssl>
   #include <abstractions/private-files-strict>
   #include <abstractions/user-tmp>
   #include <abstractions/video>
-  #include <abstractions/X>
   #include <abstractions/wayland>
 
-  #include <abstractions/dbus-accessibility-strict>
-  dbus (send)
-       bus=session
-       peer=(name=org.a11y.Bus),
-  dbus (receive)
-       bus=session
-       interface=org.a11y.atspi**,
-  dbus (receive, send)
-       bus=accessibility,
+  dbus (receive send) bus=accessibility,
+  dbus receive bus=session interface=org.a11y.atspi**,
+  dbus receive bus=system path=/org/freedesktop/NetworkManager,
+  dbus send bus=session peer=(name=org.a11y.Bus),
+  dbus send bus=system path=/org/freedesktop/NetworkManager member=state,
 
-  # for networking
-  network inet stream,
-  network inet6 stream,
-  @{PROC}/[0-9]*/net/if_inet6 r,
-  @{PROC}/[0-9]*/net/ipv6_route r,
-  @{PROC}/[0-9]*/net/dev r,
-  @{PROC}/[0-9]*/net/wireless r,
-  dbus (send)
-       bus=system
-       path=/org/freedesktop/NetworkManager
-       member=state,
-  dbus (receive)
-       bus=system
-       path=/org/freedesktop/NetworkManager,
+  signal receive peer=unconfirmed,
+  signal send set=usr2 peer=/usr/bin/pacmd,
 
-  # pulse audo configuration
-  signal (send) peer=/usr/bin/pacmd set=(usr2),
-  #ptrace (read) peer=unconfined,
-  /usr/bin/pactl ix,
-  /usr/bin/pacmd ix,
+  deny ptrace trace,
 
-  /{,usr/}bin/cat ix,
-  /{,usr/}bin/dash ix,
-  #/{,usr/}bin/bash ix,
-  #/usr/bin/gawk ix,
-  /{,usr/}bin/grep ix,
-  /{,usr/}bin/readlink ix,
-  /{,usr/}sbin/killall5 ix,
-  /usr/bin/lscpu ix,
-  /usr/bin/lspci ix,
-  /opt/zoom/zopen ix,
-  /usr/bin/xdg-open Uxr,
+  ptrace read peer=/opt/zoom/QtWebEngineProcess,
 
-  /usr/share/fonts/truetype/** rm,
-  /usr/share/fontconfig/conf.avail/ r,
-  /usr/share/fontconfig/conf.avail/** r,
-  /opt/ r,
-  /opt/zoom/ rm,
-  /opt/zoom/** rm,
-  /opt/zoom/RegisterProtocol/ rw,
-  /opt/zoom/QtQuick/ r,
-  /opt/zoom/QtQuick/** rm,
-  /opt/zoom/QtQuick.2/** rm,
-  /opt/zoom/iconengines/lib* rm,
-  /opt/zoom/imageformats/lib* rm,
-  /opt/zoom/platforms/lib* rm,
-  /opt/zoom/platforminputcontexts/lib* rm,
-  /opt/zoom/platformthemes/lib*.so* rm,
-  /opt/zoom/lib*.so.* rm,
-  /opt/zoom/xcbglintegrations/*.so rm,
-  ptrace (read) peer=/opt/zoom/QtWebEngineProcess,
+  deny @{HOME}/.Private mrwlk,
+  deny @{PROC}/[0-9]*/cmdline mrwlk,
 
-  /opt/zoom/QtWebEngineProcess ix,
-  /opt/zoom/qtdiag ix,
-  /opt/zoom/zoom ix,
-
-  @{PROC} r,
-  owner @{PROC}/@{pid}/fd/ r,
-  owner @{PROC}/@{pid}/mounts r,
-  @{PROC}/@{pid}/stat r,
-  @{PROC}/@{pid}/task/* r,
-  @{PROC}/@{pid}/oom_score_adj w,
-  @{PROC}/bus/pci/devices r,
-  @{PROC}/sys/kernel/pid_max r,
-  @{PROC}/sys/kernel/osrelease r,
-  @{PROC}/sys/dev/i915/perf_stream_paranoid r,
-  deny @{PROC}/[0-9]*/cmdline mrwkl,
-  deny ptrace (trace),
-
-  /sys/devices/pci[0-9]*/**/{busnum,class,config,device,devnum,descriptors,irq,resource,revision,speed,subsystem_device,subsystem_vendor,uevent,vendor} r,
-  /sys/bus/pci/devices/ r,
-  /usr/share/misc/pci.ids r,
-  /usr/share/icons/hicolor/** rm,
-
-  /sys/devices/system/cpu/cpufreq/policy*/{cpuinfo_max_freq,cpuinfo_min_freq} r,
-  /sys/devices/system/cpu/kernel_max r,
-  /sys/devices/system/cpu/{possible,present} r,
-  /sys/devices/system/cpu/vulnerabilities/ r,
-  /sys/devices/system/cpu/vulnerabilities/** r,
-  /sys/devices/system/cpu/cpu*/topology/{core_id,physical_package_id,core_siblings,thread_siblings} r,
-  /sys/devices/system/cpu/cpu*/cache/index*/{coherency_line_size,level,number_of_sets,physical_line_partition,shared_cpu_map,size,type,ways_of_associativity} r,
-  /sys/devices/system/node/ r,
-  /sys/devices/system/node/node0/cpumap r,
-  /etc/udev/hwdb.bin r,
-
-  /dev/tty rw,
   /dev/dri/ r,
-  /dev/video[0-9] rwm,
-
-  deny @{HOME}/.Private mrwkl,
-  owner @{HOME}/Documents/Zoom/ rwk,
-  owner @{HOME}/Documents/Zoom/** rwk,
-  owner @{HOME}/.zoom/ rwk,
-  owner @{HOME}/.zoom/** rwk,
-  owner @{HOME}/.zoom/data/ rwk,
-  owner @{HOME}/.zoom/data/** rwmk,
-  owner @{HOME}/.config/QtProject.conf r,
-  owner @{HOME}/.config/gtk-3.0/{gtk.css,colors.css} r,
-  owner @{HOME}/.cache/qt_compose_cache_little_endian* rw,
-  owner @{HOME}/.cache/qtshadercache/ rw,
-  owner @{HOME}/.cache/qtshadercache/** rmw,
-  owner @{HOME}/.cache/mesa_shader_cache/ rw,
-  owner @{HOME}/.cache/mesa_shader_cache/** rwk,
-  owner @{HOME}/.cache/mesa_shader_cache/index rwm,
-  owner @{HOME}/.cache/zoom/ rwk,
-  owner @{HOME}/.cache/zoom/** rwk,
-  owner @{HOME}/.cache/zoom/qmlcache/ rwmk,
-  owner @{HOME}/.cache/zoom/qmlcache/** rwmk,
-  owner @{HOME}/.config/zoomus.conf* rwk,
-  owner @{HOME}/.config/.@{pid} rwk,
-  owner @{HOME}/.config/ibus/bus/* r,
-  owner @{HOME}/.local/share/mime/mime.cache m,
-  owner @{HOME}/.local/share/zoom/ rwk,
-  owner @{HOME}/.local/share/zoom/** rwk,
-  owner @{HOME}/.cache/zoom/QtWebEngine/Default/Cache/* rm,
-  owner @{HOME}/.config/.J* rwk,
-  owner @{HOME}/.config/gtk-3.0/settings.ini r,
-  owner "@{HOME}/.config/Unknown Organization/" rw,
-  owner "@{HOME}/.config/Unknown Organization/**" rwk,
-  owner @{HOME}/.glvnd* rwm,
-  owner @{HOME}/.config/.T* rwk,
-  owner @{HOME}/.config/dconf/user rw,
-  owner /{,var/}run/user/*/dconf/user rw,
-  owner @{HOME}/.pki/nssdb/cert9.db r,
-  owner @{HOME}/.pki/nssdb/pkcs11.txt r,
-  owner /dev/shm/.org.chromium.Chromium* rwm,
-
-  /var/lib/flatpak/exports/share/mime/mime.cache m,
-  /usr/share/mime/mime.cache m,
-
-  /usr/bin/gsettings Ux,
-  /usr/share/glib-2.0/schemas/gschemas.compiled r,
-  /usr/share/themes/Default/gtk-3.0/gtk-keys.css r,
-
+  /dev/tty rw,
+  /dev/video[0-9] mrw,
   /etc/debian-version r,
   /etc/os-release r,
   /etc/passwd m,
   /etc/timezone r,
+  /etc/udev/hwdb.bin r,
+  /opt/ r,
+  /opt/zoom/ mr,
+  /opt/zoom/** mr,
+  /opt/zoom/QtQuick.2/** mr,
+  /opt/zoom/QtQuick/** mr,
+  /opt/zoom/QtWebEngineProcess ix,
+  /opt/zoom/RegisterProtocol/ rw,
+  /opt/zoom/iconengines/lib* mr,
+  /opt/zoom/imageformats/lib* mr,
+  /opt/zoom/lib*.so.* mr,
+  /opt/zoom/platforminputcontexts/lib* mr,
+  /opt/zoom/platforms/lib* mr,
+  /opt/zoom/platformthemes/lib*.so* mr,
+  /opt/zoom/qtdiag ix,
+  /opt/zoom/xcbglintegrations/*.so mr,
+  /opt/zoom/zoom ix,
+  /opt/zoom/zopen ix,
+  /sys/bus/pci/devices/ r,
+  /sys/devices/pci[0-9]*/**/{busnum,class,config,device,devnum,descriptors,irq,resource,revision,speed,subsystem_device,subsystem_vendor,uevent,vendor} r,
+  /sys/devices/system/cpu/cpu*/cache/index*/{coherency_line_size,level,number_of_sets,physical_line_partition,shared_cpu_map,size,type,ways_of_associativity} r,
+  /sys/devices/system/cpu/cpu*/topology/{core_id,physical_package_id,core_siblings,thread_siblings} r,
+  /sys/devices/system/cpu/cpufreq/policy*/{cpuinfo_max_freq,cpuinfo_min_freq} r,
+  /sys/devices/system/cpu/kernel_max r,
+  /sys/devices/system/cpu/vulnerabilities/ r,
+  /sys/devices/system/cpu/vulnerabilities/** r,
+  /sys/devices/system/cpu/{possible,present} r,
+  /sys/devices/system/node/ r,
+  /sys/devices/system/node/node0/cpumap r,
+  /usr/bin/gsettings Ux,
+  /usr/bin/lsb_release rCx -> lsb_release,
+  /usr/bin/lscpu ix,
+  /usr/bin/lspci ix,
+  /usr/bin/mkfifo rUx, # investigate
+  /usr/bin/pacmd ix,
+  /usr/bin/pactl ix,
+  /usr/bin/xdg-open rUx,
+  /usr/share/fontconfig/conf.avail/** r,
+  /usr/share/fonts/truetype/** mr,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/icons/hicolor/** mr,
+  /usr/share/mime/mime.cache m,
+  /usr/share/misc/pci.ids r,
+  /usr/share/themes/Default/gtk-3.0/gtk-keys.css r,
+  /var/lib/flatpak/exports/share/mime/mime.cache m,
+  /{,usr/}bin/cat ix,
+  /{,usr/}bin/dash ix,
+  /{,usr/}bin/grep ix,
+  /{,usr/}bin/ps rUx,
+  /{,usr/}bin/readlink ix,
+  /{,usr/}bin/uname rUx,
+  /{,usr/}sbin/killall5 ix,
+  @{PROC} r,
+  @{PROC}/@{pid}/oom_score_adj w,
+  @{PROC}/@{pid}/stat r,
+  @{PROC}/@{pid}/task/* r,
+  @{PROC}/[0-9]*/net/dev r,
+  @{PROC}/[0-9]*/net/if_inet6 r,
+  @{PROC}/[0-9]*/net/ipv6_route r,
+  @{PROC}/[0-9]*/net/wireless r,
+  @{PROC}/bus/pci/devices r,
+  @{PROC}/sys/dev/i915/perf_stream_paranoid r,
+  @{PROC}/sys/kernel/osrelease r,
+  @{PROC}/sys/kernel/pid_max r,
+  owner "@{HOME}/.config/Unknown Organization/" rw,
+  owner "@{HOME}/.config/Unknown Organization/**" rwk,
+  owner /dev/shm/.org.chromium.Chromium* mrw,
+  owner /{,var/}run/user/*/dconf/user rw,
+  owner @{HOME}/.cache/mesa_shader_cache/ rw,
+  owner @{HOME}/.cache/mesa_shader_cache/** rwk,
+  owner @{HOME}/.cache/mesa_shader_cache/index mrw,
+  owner @{HOME}/.cache/qt_compose_cache_little_endian* rw,
+  owner @{HOME}/.cache/qtshadercache/ rw,
+  owner @{HOME}/.cache/qtshadercache/** mrw,
+  owner @{HOME}/.cache/zoom/ rwk,
+  owner @{HOME}/.cache/zoom/** rwk,
+  owner @{HOME}/.cache/zoom/QtWebEngine/Default/Cache/* mr,
+  owner @{HOME}/.cache/zoom/qmlcache/ mrwk,
+  owner @{HOME}/.cache/zoom/qmlcache/** mrwk,
+  owner @{HOME}/.config/.@{pid} rwk,
+  owner @{HOME}/.config/.J* rwk,
+  owner @{HOME}/.config/.T* rwk,
+  owner @{HOME}/.config/QtProject.conf r,
+  owner @{HOME}/.config/dconf/user rw,
+  owner @{HOME}/.config/gtk-3.0/settings.ini r,
+  owner @{HOME}/.config/gtk-3.0/{gtk.css,colors.css} r,
+  owner @{HOME}/.config/ibus/bus/* r,
+  owner @{HOME}/.config/zoomus.conf* rwk,
+  owner @{HOME}/.glvnd* mrw,
+  owner @{HOME}/.local/share/mime/mime.cache m,
+  owner @{HOME}/.local/share/zoom/ rwk,
+  owner @{HOME}/.local/share/zoom/** rwk,
+  owner @{HOME}/.pki/nssdb/cert9.db r,
+  owner @{HOME}/.pki/nssdb/pkcs11.txt r,
+  owner @{HOME}/.zoom/ rwk,
+  owner @{HOME}/.zoom/** rwk,
+  owner @{HOME}/.zoom/data/ rwk,
+  owner @{HOME}/.zoom/data/** mrwk,
+  owner @{HOME}/Documents/Zoom/ rwk,
+  owner @{HOME}/Documents/Zoom/** rwk,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mounts r,
 
-  # Allow zoom to be killed
-  signal (receive) peer=unconfirmed,
 
-  # Miscellaneous (to be abstracted)
-  # Ideally these would use a child profile. They are all ELF executables
-  # so running with 'Ux', while not ideal, is ok because we will at least
-  # benefit from glibc's secure execute.
-  /usr/bin/mkfifo Uxr,  # investigate
-  /{,usr/}bin/ps Uxr,
-  /{,usr/}bin/uname Uxr,
-  /usr/bin/lsb_release Cxr -> lsb_release,
   profile lsb_release {
     #include <abstractions/base>
     #include <abstractions/python>
-    /usr/bin/lsb_release r,
-    /usr/share/distro-info/debian.csv r,
-    /etc/dpkg/origins/* r,
-    /etc/debian_version r,
-    /usr/local/lib/python3.[0-4]/dist-packages/ r,
-    /usr/bin/ r,
-    /usr/bin/python3.[0-8] ixr,
 
-    /usr/bin/apt-cache ix,
+    deny /tmp/gtalkplugin.log w,
+
     /etc/apt/** r,
+    /etc/debian_version r,
+    /etc/dpkg/** r,
+    /etc/dpkg/origins/* r,
+    /usr/bin/ r,
+    /usr/bin/apt-cache ix,
+    /usr/bin/dpkg ix,
+    /usr/bin/lsb_release r,
+    /usr/bin/python3.[0-8] rix,
+    /usr/local/lib/python3.[0-4]/dist-packages/ r,
+    /usr/share/distro-info/debian.csv r,
+    /usr/share/dpkg/ r,
+    /usr/share/dpkg/** r,
     /var/cache/apt/** r,
     /var/lib/apt/lists/ r,
     /var/lib/apt/lists/** r,
-    /usr/share/dpkg/ r,
-    /usr/share/dpkg/** r,
+    /var/lib/dpkg/** r,
+    owner /tmp/** mrw,
     owner @{PROC}/[0-9]*/fd/ r,
     owner @{PROC}/[0-9]*/fd/** r,
 
-    /usr/bin/dpkg ix,
-    /var/lib/dpkg/** r,
-    /etc/dpkg/** r,
-
-    owner /tmp/** rwm,
-
-    # file_inherit
-    deny /tmp/gtalkplugin.log w,
   }
 }
