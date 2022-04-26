@@ -1,21 +1,21 @@
-# Last Modified: Wed Dec 23 11:50:26 2020
-#include <tunables/global>
+# Last Modified: Mon Apr 25 22:40:23 2022
+include <tunables/global>
 
-/opt/zoom/ZoomLauncher {
-  #include <abstractions/X>
-  #include <abstractions/audio>
-  #include <abstractions/base>
-  #include <abstractions/dbus-accessibility-strict>
-  #include <abstractions/dbus-session-strict>
-  #include <abstractions/dbus-strict>
-  #include <abstractions/fonts>
-  #include <abstractions/freedesktop.org>
-  #include <abstractions/nameservice>
-  #include <abstractions/openssl>
-  #include <abstractions/private-files-strict>
-  #include <abstractions/user-tmp>
-  #include <abstractions/video>
-  #include <abstractions/wayland>
+/opt/zoom/ZoomLauncher flags=(complain) {
+  include <abstractions/X>
+  include <abstractions/audio>
+  include <abstractions/base>
+  include <abstractions/dbus-accessibility-strict>
+  include <abstractions/dbus-session-strict>
+  include <abstractions/dbus-strict>
+  include <abstractions/fonts>
+  include <abstractions/freedesktop.org>
+  include <abstractions/nameservice>
+  include <abstractions/openssl>
+  include <abstractions/private-files-strict>
+  include <abstractions/user-tmp>
+  include <abstractions/video>
+  include <abstractions/wayland>
 
   dbus (receive send) bus=accessibility,
   dbus receive bus=session interface=org.a11y.atspi**,
@@ -26,11 +26,11 @@
   signal receive peer=unconfirmed,
   signal send set=usr2 peer=/usr/bin/pacmd,
 
+  deny ptrace read peer=/usr/bin/pidof,
   deny ptrace trace,
 
   ptrace read peer=/opt/zoom/QtWebEngineProcess,
   ptrace read peer=/usr/bin/pacmd,
-  deny ptrace read peer=/usr/bin/pidof,
 
   deny @{HOME}/.Private mrwlk,
   deny @{PROC}/[0-9]*/cmdline mrwlk,
@@ -148,8 +148,8 @@
 
 
   profile lsb_release {
-    #include <abstractions/base>
-    #include <abstractions/python>
+    include <abstractions/base>
+    include <abstractions/python>
 
     deny /tmp/gtalkplugin.log w,
 
