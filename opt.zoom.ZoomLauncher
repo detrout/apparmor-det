@@ -30,6 +30,7 @@
 
   ptrace read peer=/opt/zoom/QtWebEngineProcess,
   ptrace read peer=/usr/bin/pacmd,
+  deny ptrace read peer=/usr/bin/pidof,
 
   deny @{HOME}/.Private mrwlk,
   deny @{PROC}/[0-9]*/cmdline mrwlk,
@@ -77,6 +78,7 @@
   /usr/bin/mkfifo rUx, # investigate
   /usr/bin/pacmd ix,
   /usr/bin/pactl ix,
+  /usr/bin/pidof Ux,
   /usr/bin/xdg-open rUx,
   /usr/share/fontconfig/conf.avail/** r,
   /usr/share/fonts/truetype/** mr,
