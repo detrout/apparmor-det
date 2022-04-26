@@ -29,6 +29,7 @@
   deny ptrace trace,
 
   ptrace read peer=/opt/zoom/QtWebEngineProcess,
+  ptrace read peer=/usr/bin/pacmd,
 
   deny @{HOME}/.Private mrwlk,
   deny @{PROC}/[0-9]*/cmdline mrwlk,
