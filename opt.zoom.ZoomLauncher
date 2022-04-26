@@ -1,7 +1,7 @@
 # Last Modified: Mon Apr 25 22:40:23 2022
 include <tunables/global>
 
-/opt/zoom/ZoomLauncher flags=(complain) {
+/opt/zoom/ZoomLauncher {
   include <abstractions/X>
   include <abstractions/audio>
   include <abstractions/base>
@@ -17,16 +17,18 @@ include <tunables/global>
   include <abstractions/video>
   include <abstractions/wayland>
 
-  dbus (receive send) bus=accessibility,
+  # dbus (receive send) bus=accessibility,
   dbus receive bus=session interface=org.a11y.atspi**,
   dbus receive bus=system path=/org/freedesktop/NetworkManager,
   dbus send bus=session peer=(name=org.a11y.Bus),
   dbus send bus=system path=/org/freedesktop/NetworkManager member=state,
+  dbus (send, receive) bus=system path=/org/freedesktop/NetworkManager/Settings,
 
   signal receive peer=unconfirmed,
   signal send set=usr2 peer=/usr/bin/pacmd,
 
   deny ptrace read peer=/usr/bin/pidof,
+  deny ptrace read peer=pidof,
   deny ptrace trace,
 
   ptrace read peer=/opt/zoom/QtWebEngineProcess,
@@ -34,6 +36,9 @@ include <tunables/global>
 
   deny @{HOME}/.Private mrwlk,
   deny @{PROC}/[0-9]*/cmdline mrwlk,
+
+  network netlink dgram,
+  unix (bind) type=dgram,
 
   /dev/dri/ r,
   /dev/tty rw,
@@ -78,7 +83,7 @@ include <tunables/global>
   /usr/bin/mkfifo rUx, # investigate
   /usr/bin/pacmd ix,
   /usr/bin/pactl ix,
-  /usr/bin/pidof Ux,
+  deny /usr/bin/pidof x,
   /usr/bin/xdg-open rUx,
   /usr/share/fontconfig/conf.avail/** r,
   /usr/share/fonts/truetype/** mr,
@@ -89,20 +94,23 @@ include <tunables/global>
   /usr/share/themes/Default/gtk-3.0/gtk-keys.css r,
   /var/lib/flatpak/exports/share/mime/mime.cache m,
   /{,usr/}bin/cat ix,
-  /{,usr/}bin/dash ix,
-  /{,usr/}bin/grep ix,
-  /{,usr/}bin/ps rUx,
-  /{,usr/}bin/readlink ix,
+  deny /{,usr/}bin/dash x,
+  deny /{,usr/}bin/ps x,
+  deny /{,usr/}bin/grep x,
+  deny /{,usr/}bin/readlink x,
   /{,usr/}bin/uname rUx,
   /{,usr/}sbin/killall5 ix,
   @{PROC} r,
   @{PROC}/@{pid}/oom_score_adj w,
+  @{PROC}/@{pid}/setgroups w,
   @{PROC}/@{pid}/stat r,
+  @{PROC}/@{pid}/comm r,
   @{PROC}/@{pid}/task/* r,
+  @{PROC}/@{pid}/task/comm rw,
   @{PROC}/[0-9]*/net/dev r,
   @{PROC}/[0-9]*/net/if_inet6 r,
   @{PROC}/[0-9]*/net/ipv6_route r,
-  @{PROC}/[0-9]*/net/wireless r,
+  # @{PROC}/[0-9]*/net/wireless r,
   @{PROC}/bus/pci/devices r,
   @{PROC}/sys/dev/i915/perf_stream_paranoid r,
   @{PROC}/sys/kernel/osrelease r,
@@ -123,8 +131,6 @@ include <tunables/global>
   owner @{HOME}/.cache/zoom/qmlcache/ mrwk,
   owner @{HOME}/.cache/zoom/qmlcache/** mrwk,
   owner @{HOME}/.config/.@{pid} rwk,
-  owner @{HOME}/.config/.J* rwk,
-  owner @{HOME}/.config/.T* rwk,
   owner @{HOME}/.config/QtProject.conf r,
   owner @{HOME}/.config/dconf/user rw,
   owner @{HOME}/.config/gtk-3.0/settings.ini r,
@@ -144,8 +150,10 @@ include <tunables/global>
   owner @{HOME}/Documents/Zoom/ rwk,
   owner @{HOME}/Documents/Zoom/** rwk,
   owner @{PROC}/@{pid}/fd/ r,
-  owner @{PROC}/@{pid}/mounts r,
 
+  owner /{,var/}run/user/[0-9]*/pulse/cli rw,
+  # Zoom 5.10.x
+  # capability sys_admin,
 
   profile lsb_release {
     include <abstractions/base>
